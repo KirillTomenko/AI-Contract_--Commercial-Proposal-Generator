@@ -29,8 +29,7 @@ from aiogram.types import (
     InlineKeyboardMarkup,
     Message,
 )
-from aiohttp import TCPConnector
-from aiohttp_socks import ProxyConnector  # pip install aiohttp-socks
+from aiogram.client.session.aiohttp import AiohttpSession
 
 from app.models.schemas import DocumentType, GenerateRequest
 from app.services.document_service import DocumentService
@@ -167,19 +166,17 @@ async def on_text_received(message: Message, state: FSMContext) -> None:
 def create_bot_and_dp() -> tuple[Bot, Dispatcher]:
     """
     Создаёт Bot с SOCKS5-прокси (Karing) и Dispatcher.
-    Если TELEGRAM_PROXY не задан — работает без прокси.
+    aiogram 3.20+ поддерживает proxy URL напрямую в AiohttpSession.
     """
-    connector = None
     if settings.telegram_proxy:
-        try:
-            connector = ProxyConnector.from_url(settings.telegram_proxy)
-            logger.info("Telegram прокси: %s", settings.telegram_proxy)
-        except Exception as exc:
-            logger.warning("Не удалось создать прокси-коннектор: %s", exc)
+        logger.info("Telegram прокси: %s", settings.telegram_proxy)
+        session = AiohttpSession(proxy=settings.telegram_proxy)
+    else:
+        session = AiohttpSession()
 
     bot = Bot(
         token=settings.telegram_bot_token,
-        session=connector,  # type: ignore[arg-type]
+        session=session,
     )
     dp = Dispatcher(storage=MemoryStorage())
 
