@@ -373,9 +373,9 @@ TELEGRAM_PROXY=socks5://127.0.0.1:1080
 
 ## 📸 Скриншоты
 
-| Swagger UI | PDF-отчёт |
-|-----------|-----------|
-| ![Swagger](docs/screenshots/swagger.png) | ![PDF](docs/screenshots/pdf_report.png) |
+| Swagger UI | PDF-отчёт | Telegram-бот |
+|-----------|-----------|--------------|
+| ![Swagger](docs/screenshots/swagger.png) | ![PDF](docs/screenshots/pdf_report.png) | ![Bot](docs/screenshots/telegram_bot.png) |
 
 ---
 
