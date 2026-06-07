@@ -304,6 +304,46 @@ ai-document-generator/
 | `TELEGRAM_BOT_TOKEN` | Токен бота | — |
 | `TELEGRAM_PROXY` | SOCKS5-прокси | `socks5://127.0.0.1:1080` |
 
+### 🖼 Генерация изображений (опционально)
+
+Для карточки товара сервис может автоматически генерировать изображение и вставлять его в PDF.
+
+| Переменная | Описание | По умолчанию |
+|-----------|----------|-------------|
+| `IMAGE_GENERATION_ENABLED` | Включить генерацию | `false` |
+| `IMAGE_BACKEND` | Бэкенд: `openai` / `gigachat` / `yandex` | `openai` |
+| `IMAGE_MODEL` | Модель OpenAI | `gpt-image-1` |
+| `GIGACHAT_CREDENTIALS` | Ключ GigaChat (base64) | — |
+| `GIGACHAT_SCOPE` | Скоуп GigaChat | `GIGACHAT_API_PERS` |
+| `YANDEX_API_KEY` | API-ключ YandexART | — |
+| `YANDEX_FOLDER_ID` | Folder ID Yandex Cloud | — |
+
+**Как получить ключ GigaChat:**
+
+1. Зарегистрируйся на [developers.sber.ru/studio](https://developers.sber.ru/studio/)
+2. Создай проект → перейди в раздел **API**
+3. Нажми **«Сгенерировать Client Secret»** — получишь `client_id` и `client_secret`
+4. Закодируй в base64: `base64(client_id:client_secret)`
+5. Вставь результат в `GIGACHAT_CREDENTIALS`
+
+```bash
+# Пример кодирования на Linux/macOS
+echo -n "your_client_id:your_client_secret" | base64
+
+# На Windows (PowerShell)
+[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes("your_client_id:your_client_secret"))
+```
+
+**Пример `.env` для GigaChat:**
+```
+IMAGE_GENERATION_ENABLED=true
+IMAGE_BACKEND=gigachat
+GIGACHAT_CREDENTIALS=base64encodedstring==
+GIGACHAT_SCOPE=GIGACHAT_API_PERS
+```
+
+> ⚠️ GigaChat использует российский сертификат МЦД. В коде установлен `verify_ssl_certs=False` для dev-режима. В продакшн передай путь к сертификату через `ca_bundle_file`.
+
 ---
 
 ## 🤖 Telegram-бот
@@ -336,8 +376,6 @@ TELEGRAM_PROXY=socks5://127.0.0.1:1080
 | Swagger UI | PDF-отчёт | Telegram-бот |
 |-----------|-----------|--------------|
 | ![Swagger](docs/screenshots/swagger.png) | ![PDF](docs/screenshots/pdf_report.png) | ![Bot](docs/screenshots/telegram_bot.png) |
-
-> 📌 Скриншоты добавляются после первого запуска
 
 ---
 
