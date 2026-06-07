@@ -1,0 +1,40 @@
+# ============================================================
+# AI Document Generator — зависимости
+# Проверено: Python 3.12 — конфликтов нет
+# ============================================================
+
+# Web framework
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+
+# AI / LLM
+openai==1.50.0
+httpx==0.27.2
+
+# GigaChat image generation (ai-forever/gigachat)
+# 0.2.1 — первая версия с полной поддержкой Python 3.12
+gigachat==0.2.1
+
+# Data validation
+# ВАЖНО: aiogram==3.13 требовал pydantic<2.9 — это было исправлено в aiogram 3.14+
+# Используем aiogram==3.20.0 + pydantic==2.10.6 — совместимо с Python 3.12
+pydantic==2.10.6
+pydantic-settings==2.6.1
+
+# PDF generation
+reportlab==4.2.2
+
+# Database
+aiosqlite==0.20.0
+
+# Telegram bot (optional)
+aiogram==3.20.0
+aiohttp==3.10.8
+aiohttp-socks==0.8.4
+
+# Utils
+python-dotenv==1.0.1
+
+# Testing
+pytest==8.3.3
+pytest-asyncio==0.24.0
